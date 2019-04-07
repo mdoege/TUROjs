@@ -25,6 +25,7 @@ $(document).ready(function() {
 		}
 		fentext.innerHTML = fen;
 		console.log(fen);
+		getmove();
 	}
 
 	var board1 = ChessBoard('board1', {
@@ -34,8 +35,6 @@ $(document).ready(function() {
 	});
 	board1.start();
 	var chess = new Chess();
-
-	$('#moveBtn').on('click', getmove);
 
 	function getmove() {
 		var moves = chess.moves({ verbose: true });
@@ -82,8 +81,6 @@ $(document).ready(function() {
 <h1>TUROCHAMP in your browser</h1>
 <div id="fentext">none</div>
 <div id="board1" style="width: 650px"></div>
-<br>
-<input type="button" id="moveBtn" value="Get move">
 <br>
 <div id="stext">none</div>
 </body>
