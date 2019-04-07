@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>TUROjs</title>
+<link rel="stylesheet" href="chessboard.css">
+</head>
+<body>
+<script src="jquery-1.10.1.min.js"></script>
+<script src="chessboard.js"></script>
+<script src="chess.js"></script>
+<script>
+$(document).ready(function() {
+	var setfen = function(source, target, piece, newPos, oldPos, orientation) {
+		var fen = board1.fen();
+		chess.move(source + target, {sloppy: true});
+		fentext.innerHTML = fen;
+		console.log(fen);
+	}
+
+	var board1 = ChessBoard('board1', {
+		draggable: true,
+		dropOffBoard: 'trash',
+		onDrop: setfen,
+	});
+	board1.start();
+	var chess = new Chess();
+
+	$('#moveBtn').on('click', getmove);
+
+	function getmove() {
+		var moves = chess.moves({ verbose: true });
+		var tomove = chess.turn();
+		var ascore = '';
+		var mymove = '';
+		var top = -1;
+
+		for (j = 0; j < moves.length; j++) {
+			var move = moves[j];
+			chess.move(move.san);
+			chess.swapturn()
+			var score = chess.moves().length;
+			chess.swapturn()
+
+			ascore = ascore + move.san + ' ' + score + '<br>';
+			if (score > top) {
+				top = score;
+				mymove = move;
+			}
+			chess.undo();
+		}
+		stext.innerHTML = ascore;
+		console.log(mymove.from + '-' + mymove.to);
+		chess.move(mymove);
+		board1.move(mymove.from + '-' + mymove.to);
+	}
+
+
+});
+</script>
+<h1>TUROCHAMP in your browser</h1>
+<div id="fentext">none</div>
+<div id="board1" style="width: 650px"></div>
+<br>
+<input type="button" id="moveBtn" value="Get move">
+<br>
+<div id="stext">none</div>
+</body>
+</html>
+
