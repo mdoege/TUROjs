@@ -1,4 +1,7 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <head>
 <title>TUROjs</title>
 <link rel="stylesheet" href="chessboard.css">
@@ -9,9 +12,17 @@
 <script src="chess.js"></script>
 <script>
 $(document).ready(function() {
+	function talk(text) {
+		msg = new SpeechSynthesisUtterance(text);
+		window.speechSynthesis.speak(msg);
+	}
+
 	var setfen = function(source, target, piece, newPos, oldPos, orientation) {
 		var fen = board1.fen();
-		chess.move(source + target, {sloppy: true});
+		ret = chess.move(source + target, {sloppy: true});
+		if (ret == null) {
+			talk("Illegal move!");
+		}
 		fentext.innerHTML = fen;
 		console.log(fen);
 	}
@@ -51,6 +62,18 @@ $(document).ready(function() {
 		console.log(mymove.from + '-' + mymove.to);
 		chess.move(mymove);
 		board1.move(mymove.from + '-' + mymove.to);
+
+		var pnames = {
+			'p': 'pawn',
+			'n': 'knight',
+			'b': 'bishop',
+			'r': 'rook',
+			'q': 'queen',
+			'k': 'king',
+		};
+		var piece = mymove.piece;
+		var spt = pnames[piece] + ' from ' + mymove.from + ' to ' + mymove.to;
+		talk(spt);
 	}
 
 
