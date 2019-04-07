@@ -25,6 +25,7 @@ $(document).ready(function() {
 		}
 		fentext.innerHTML = fen;
 		console.log(fen);
+		spgn.innerHTML = chess.pgn();
 		getmove();
 	}
 
@@ -61,6 +62,7 @@ $(document).ready(function() {
 		console.log(mymove.from + '-' + mymove.to);
 		chess.move(mymove);
 		board1.move(mymove.from + '-' + mymove.to);
+		spgn.innerHTML = chess.pgn();
 
 		var pnames = {
 			'p': 'pawn',
@@ -80,7 +82,10 @@ $(document).ready(function() {
 </script>
 <h1>TUROCHAMP in your browser</h1>
 <div id="fentext">none</div>
-<div id="board1" style="width: 650px"></div>
+<table><tr>
+<td><div id="board1" style="width: 650px"></div></td>
+<td><div id="spgn">none</div></td>
+</tr></table>
 <br>
 <div id="stext">none</div>
 </body>
