@@ -46,6 +46,7 @@ $(document).ready(function() {
 	});
 	board1.start();
 	var chess = new Chess();
+	$('#moveBtn').on('click', getmove);
 
 	function getmove() {
 		var moves = chess.moves({ verbose: true });
@@ -95,6 +96,7 @@ $(document).ready(function() {
 <td><div id="spgn">none</div></td>
 </tr></table>
 <br>
+<input type="button" id="moveBtn" value="Get TUROCHAMP move now">
 <div id="stext">none</div>
 </body>
 </html>
