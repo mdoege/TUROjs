@@ -84,6 +84,12 @@ $(document).ready(function() {
 			'k': 'king',
 		};
 		talk(pnames[mymove.piece] + ' from ' + mymove.from + ' to ' + mymove.to);
+		if (chess.in_check()) {
+			talk('Check!');
+		}
+		if (chess.in_checkmate()) {
+			talk('Checkmate!');
+		}
 	}
 
 
