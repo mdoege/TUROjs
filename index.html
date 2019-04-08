@@ -23,11 +23,12 @@ $(document).ready(function() {
 		ret = chess.move(source + target, {sloppy: true});
 		if (ret == null) {
 			talk("Illegal move!");
+		} else {
+			fentext.innerHTML = fen;
+			console.log(fen);
+			spgn.innerHTML = chess.pgn();
+			getmove();
 		}
-		fentext.innerHTML = fen;
-		console.log(fen);
-		spgn.innerHTML = chess.pgn();
-		getmove();
 	}
 
 	var board1 = ChessBoard('board1', {
@@ -73,9 +74,7 @@ $(document).ready(function() {
 			'q': 'queen',
 			'k': 'king',
 		};
-		var piece = mymove.piece;
-		var spt = pnames[piece] + ' from ' + mymove.from + ' to ' + mymove.to;
-		talk(spt);
+		talk(pnames[mymove.piece] + ' from ' + mymove.from + ' to ' + mymove.to);
 	}
 
 
