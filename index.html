@@ -17,12 +17,20 @@ $(document).ready(function() {
 		msg.lang = 'en-US';
 		window.speechSynthesis.speak(msg);
 	}
+	talk("Hello, welcome to Too Row Champ!");
+	talk("How about a nice game of chess?");
 
 	var setfen = function(source, target, piece, newPos, oldPos, orientation) {
 		var fen = board1.fen();
 		ret = chess.move(source + target, {sloppy: true});
 		if (ret == null) {
 			talk("Illegal move!");
+			talk("Please make a valid move instead!");
+			if (chess.turn() == 'w') {
+				talk("It is White's turn.");
+			} else {
+				talk("It is Black's turn.");
+			}
 		} else {
 			fentext.innerHTML = fen;
 			console.log(fen);
