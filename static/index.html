@@ -12,7 +12,7 @@
 <script>
 $(document).ready(function() {
 	function talk(text) {
-		msg = new SpeechSynthesisUtterance(text);
+		var msg = new SpeechSynthesisUtterance(text);
 		msg.lang = 'en-US';
 		window.speechSynthesis.speak(msg);
 	}
@@ -20,7 +20,7 @@ $(document).ready(function() {
 	talk("How about a nice game of chess?");
 
 	var setfen = function(source, target, piece, newPos, oldPos, orientation) {
-		ret = chess.move(source + target, {sloppy: true});
+		var ret = chess.move(source + target, {sloppy: true});
 		var fen = chess.fen();
 		if (ret == null) {
 			talk("Illegal move!");
@@ -44,11 +44,12 @@ $(document).ready(function() {
 		onDrop: setfen,
 	});
 	board1.start();
+
 	var chess = new Chess();
 	$('#moveBtn').on('click', getmove);
 
 	function getmove() {
-		fen = chess.fen();
+		var fen = chess.fen();
 		$.ajax({
 			url: '/ptcmove',
 			type: 'POST',
@@ -68,7 +69,7 @@ $(document).ready(function() {
 
 		for (j = 0; j < moves.length; j++) {
 			if (moves[j].from + moves[j].to == data) {
-				mymove = moves[j];
+				var mymove = moves[j];
 			}
 		}
 		console.log(mymove.from + '-' + mymove.to);
