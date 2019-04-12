@@ -11,7 +11,7 @@ Start the web app:
 
     pypy3 ptc_web.py
 
-Open this URL in the web browser:
+Open this URL in your web browser:
 
 [http://localhost:5000/index.html](http://localhost:5000/index.html)
 

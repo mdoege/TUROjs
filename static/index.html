@@ -72,6 +72,9 @@ $(document).ready(function() {
 				var mymove = moves[j];
 			}
 		}
+		if (mymove.flags.includes("c")) {
+			var cpiece = chess.get(mymove.to);
+		}
 		console.log(mymove.from + '-' + mymove.to);
 		chess.move(mymove);
 		board1.move(mymove.from + '-' + mymove.to);
@@ -89,7 +92,21 @@ $(document).ready(function() {
 			'q': 'queen',
 			'k': 'king',
 		};
-		talk(pnames[mymove.piece] + ' from ' + mymove.from + ' to ' + mymove.to);
+		talk(pnames[mymove.piece] + " from " + mymove.from + " to " + mymove.to + ".");
+		if (chess.turn() == 'w') {
+			var sidm = "Black";
+		} else {
+			var sidm = "White";
+		}
+		if (mymove.flags.includes("e")) {
+			talk("Pawn takes pawn.");
+		} else if (mymove.flags.includes("c")) {
+			talk(pnames[mymove.piece] + " takes " + pnames[cpiece.type] + ".");
+		} else if (mymove.flags.includes("k")) {
+			talk(sidm + " castles kingside.");
+		} else if (mymove.flags.includes("q")) {
+			talk(sidm + " castles queenside.");
+		}
 		if (chess.in_check()) {
 			talk('Check!');
 		}
