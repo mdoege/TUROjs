@@ -1,7 +1,0 @@
-pypy3 -m pip install Flask --user
-
-pypy3 ptc_web.py 
-
-http://localhost:5000/index.html
-
-
