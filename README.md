@@ -15,6 +15,8 @@ Open this URL in your web browser:
 
 [http://localhost:5000/index.html](http://localhost:5000/index.html)
 
+Start play by dragging a white piece. If you want to switch sides, press the Get Move button. If you click the button repeatedly, the computer will play itself.
+
 ### Other packages used
 
 * [chess.js](https://github.com/jhlywa/chess.js)
