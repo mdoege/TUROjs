@@ -12,3 +12,9 @@ Start the web app:
 Open this URL in the web browser:
 
     http://localhost:5000/index.html
+
+### Other packages used
+
+* [chess.js](https://github.com/jhlywa/chess.js)
+* [chessboardjs](https://github.com/oakmac/chessboardjs)
+* [jQuery](https://github.com/jquery/jquery)
