@@ -13,7 +13,7 @@ Start the web app:
 
 Open this URL in the web browser:
 
-    http://localhost:5000/index.html
+[http://localhost:5000/index.html](http://localhost:5000/index.html)
 
 ### Other packages used
 
