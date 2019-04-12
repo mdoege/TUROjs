@@ -44,6 +44,7 @@ $(document).ready(function() {
 			fentext.innerHTML = fen;
 			console.log(fen);
 			spgn.innerHTML = chess.pgn();
+
 			getmove();
 		}
 	}
@@ -57,6 +58,10 @@ $(document).ready(function() {
 
 	var chess = new Chess();
 	$('#moveBtn').on('click', getmove);
+
+	var myfen = "8/1k3P2/8/8/8/8/6K1/8 w - - 0 1";
+	//board1.position(myfen);
+	//chess.load(myfen);
 
 	function getmove() {
 		var fen = chess.fen();
@@ -76,14 +81,22 @@ $(document).ready(function() {
 
 	function recmove(data) {
 		var moves = chess.moves({ verbose: true });
-
+		var lastmove = chess.history({ verbose: true });
+		if (lastmove.length > 0) {
+			lastmove = lastmove[lastmove.length - 1];
+			if (lastmove.flags.includes("p")) {
+				board1.position(chess.fen());
+			}
+		}
 		for (j = 0; j < moves.length; j++) {
 			if (moves[j].from + moves[j].to == data) {
 				var mymove = moves[j];
+			} else if ((moves[j].from + moves[j].to == data.substring(0, 4)) && moves[j].flags.includes("p")) {
+				console.log(moves[j].promotion, data.substring(4, 5));
+				if (moves[j].promotion == data.substring(4, 5)) {
+					var mymove = moves[j];
+				}
 			}
-		}
-		if (mymove.flags.includes("c")) {
-			var cpiece = chess.get(mymove.to);
 		}
 		console.log(mymove.from + '-' + mymove.to);
 		chess.move(mymove);
@@ -94,7 +107,9 @@ $(document).ready(function() {
 		} else if ((mymove.from == "e1" && mymove.to == "c1") || (mymove.from == "e8" && mymove.to == "c8")) {
 			board1.position(chess.fen());
 		}
-
+		if (mymove.flags.includes("p")) {
+			board1.position(chess.fen());
+		}
 		var fen = chess.fen();
 		fentext.innerHTML = fen;
 		console.log(fen);
@@ -117,7 +132,7 @@ $(document).ready(function() {
 		if (mymove.flags.includes("e")) {
 			talk("Pawn takes pawn.");
 		} else if (mymove.flags.includes("c")) {
-			talk(pnames[mymove.piece] + " takes " + pnames[cpiece.type] + ".");
+			talk(pnames[mymove.piece] + " takes " + pnames[mymove.captured] + ".");
 		} else if (mymove.flags.includes("k")) {
 			talk(sidm + " castles kingside.");
 		} else if (mymove.flags.includes("q")) {
