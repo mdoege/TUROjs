@@ -5,6 +5,8 @@ Install [Flask](http://flask.pocoo.org/) and [python-chess](https://github.com/n
     pypy3 -m pip install Flask --user
     pypy3 -m pip install python-chess --user
 
+(Of course you can also use regular Python 3, but PyPy is much faster.)
+
 Start the web app:
 
     pypy3 ptc_web.py
