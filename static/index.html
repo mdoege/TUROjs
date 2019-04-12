@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<head>
 <title>TUROjs</title>
 <link rel="stylesheet" href="chessboard.css">
 </head>
 <body>
-<script src="jquery-1.10.1.min.js"></script>
+<script src="jquery-3.4.0.min.js"></script>
 <script src="chessboard.js"></script>
 <script src="chess.js"></script>
 <script>
@@ -21,8 +20,8 @@ $(document).ready(function() {
 	talk("How about a nice game of chess?");
 
 	var setfen = function(source, target, piece, newPos, oldPos, orientation) {
-		var fen = board1.fen();
 		ret = chess.move(source + target, {sloppy: true});
+		var fen = chess.fen();
 		if (ret == null) {
 			talk("Illegal move!");
 			talk("Please make a valid move instead!");
@@ -49,30 +48,36 @@ $(document).ready(function() {
 	$('#moveBtn').on('click', getmove);
 
 	function getmove() {
+		fen = chess.fen();
+		$.ajax({
+			url: '/ptcmove',
+			type: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				fen: fen,
+			}),
+			success: function(data) {
+				recmove(data);
+			},
+		});
+		return true;
+	}
+
+	function recmove(data) {
 		var moves = chess.moves({ verbose: true });
-		var tomove = chess.turn();
-		var ascore = '';
-		var mymove = '';
-		var top = -1;
 
 		for (j = 0; j < moves.length; j++) {
-			var move = moves[j];
-			chess.move(move.san);
-			chess.swapturn()
-			var score = chess.moves().length;
-			chess.swapturn()
-
-			ascore = ascore + move.san + ' ' + score + '<br>';
-			if (score > top) {
-				top = score;
-				mymove = move;
+			if (moves[j].from + moves[j].to == data) {
+				mymove = moves[j];
 			}
-			chess.undo();
 		}
-		stext.innerHTML = ascore;
 		console.log(mymove.from + '-' + mymove.to);
 		chess.move(mymove);
 		board1.move(mymove.from + '-' + mymove.to);
+
+		var fen = chess.fen();
+		fentext.innerHTML = fen;
+		console.log(fen);
 		spgn.innerHTML = chess.pgn();
 
 		var pnames = {
@@ -103,7 +108,6 @@ $(document).ready(function() {
 </tr></table>
 <br>
 <input type="button" id="moveBtn" value="Get TUROCHAMP move now">
-<div id="stext">none</div>
 </body>
 </html>
 
