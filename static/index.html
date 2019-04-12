@@ -20,7 +20,17 @@ $(document).ready(function() {
 	talk("How about a nice game of chess?");
 
 	var setfen = function(source, target, piece, newPos, oldPos, orientation) {
-		var ret = chess.move(source + target, {sloppy: true});
+		var ret = 1;
+
+		if ((source == "e1" && target == "g1") || (source == "e8" && target == "g8")) {
+			chess.move("O-O");
+			board1.position(chess.fen());
+		} else if ((source == "e1" && target == "c1") || (source == "e8" && target == "c8")) {
+			chess.move("O-O-O");
+			board1.position(chess.fen());
+		} else {
+			ret = chess.move(source + target, {sloppy: true});
+		}
 		var fen = chess.fen();
 		if (ret == null) {
 			talk("Illegal move!");
@@ -78,6 +88,12 @@ $(document).ready(function() {
 		console.log(mymove.from + '-' + mymove.to);
 		chess.move(mymove);
 		board1.move(mymove.from + '-' + mymove.to);
+
+		if ((mymove.from == "e1" && mymove.to == "g1") || (mymove.from == "e8" && mymove.to == "g8")) {
+			board1.position(chess.fen());
+		} else if ((mymove.from == "e1" && mymove.to == "c1") || (mymove.from == "e8" && mymove.to == "c8")) {
+			board1.position(chess.fen());
+		}
 
 		var fen = chess.fen();
 		fentext.innerHTML = fen;
