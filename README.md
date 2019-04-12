@@ -1,4 +1,4 @@
-## TUROjs—TUROCHAMP as a Python web app
+## TUROjs—[PyTUROCHAMP](https://github.com/mdoege/PyTuroChamp) as a Python web app
 
 Install [Flask](http://flask.pocoo.org/) and [python-chess](https://github.com/niklasf/python-chess):
 
