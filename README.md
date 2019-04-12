@@ -1,8 +1,9 @@
 ## TUROjs—TUROCHAMP as a Python web app
 
-Install [Flask](http://flask.pocoo.org/):
+Install [Flask](http://flask.pocoo.org/) and [python-chess](https://github.com/niklasf/python-chess):
 
     pypy3 -m pip install Flask --user
+    pypy3 -m pip install python-chess --user
 
 Start the web app:
 
