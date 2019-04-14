@@ -13,7 +13,7 @@
 $(document).ready(function() {
 	function talk(text) {
 		var msg = new SpeechSynthesisUtterance(text);
-		msg.lang = 'en-US';
+		msg.lang = "en-US";
 		window.speechSynthesis.speak(msg);
 	}
 	talk("Hello, welcome to Too Row Champ!");
@@ -35,7 +35,7 @@ $(document).ready(function() {
 		if (ret == null) {
 			talk("Illegal move!");
 			talk("Please make a valid move instead!");
-			if (chess.turn() == 'w') {
+			if (chess.turn() == "w") {
 				talk("It is White's turn.");
 			} else {
 				talk("It is Black's turn.");
@@ -49,15 +49,15 @@ $(document).ready(function() {
 		}
 	}
 
-	var board1 = ChessBoard('board1', {
+	var board1 = ChessBoard("board1", {
 		draggable: true,
-		dropOffBoard: 'trash',
+		dropOffBoard: "trash",
 		onDrop: setfen,
 	});
 	board1.start();
 
 	var chess = new Chess();
-	$('#moveBtn').on('click', getmove);
+	$("#moveBtn").on("click", getmove);
 
 	var myfen = "8/1k3P2/8/8/8/8/6K1/8 w - - 0 1";
 	//board1.position(myfen);
@@ -66,9 +66,9 @@ $(document).ready(function() {
 	function getmove() {
 		var fen = chess.fen();
 		$.ajax({
-			url: '/ptcmove',
-			type: 'POST',
-			contentType: 'application/json',
+			url: "/ptcmove",
+			type: "POST",
+			contentType: "application/json",
 			data: JSON.stringify({
 				fen: fen,
 			}),
@@ -98,9 +98,9 @@ $(document).ready(function() {
 				}
 			}
 		}
-		console.log(mymove.from + '-' + mymove.to);
+		console.log(mymove.from + "-" + mymove.to);
 		chess.move(mymove);
-		board1.move(mymove.from + '-' + mymove.to);
+		board1.move(mymove.from + "-" + mymove.to);
 
 		if ((mymove.from == "e1" && mymove.to == "g1") || (mymove.from == "e8" && mymove.to == "g8")) {
 			board1.position(chess.fen());
@@ -116,15 +116,15 @@ $(document).ready(function() {
 		spgn.innerHTML = chess.pgn();
 
 		var pnames = {
-			'p': 'pawn',
-			'n': 'knight',
-			'b': 'bishop',
-			'r': 'rook',
-			'q': 'queen',
-			'k': 'king',
+			"p": "pawn",
+			"n": "knight",
+			"b": "bishop",
+			"r": "rook",
+			"q": "queen",
+			"k": "king",
 		};
 		talk(pnames[mymove.piece] + " from " + mymove.from + " to " + mymove.to + ".");
-		if (chess.turn() == 'w') {
+		if (chess.turn() == "w") {
 			var sidm = "Black";
 		} else {
 			var sidm = "White";
@@ -138,11 +138,11 @@ $(document).ready(function() {
 		} else if (mymove.flags.includes("q")) {
 			talk(sidm + " castles queenside.");
 		}
-		if (chess.in_check()) {
-			talk('Check!');
-		}
+
 		if (chess.in_checkmate()) {
-			talk('Checkmate!');
+			talk("Checkmate!");
+		} else if (chess.in_check()) {
+			talk("Check!");
 		}
 	}
 
