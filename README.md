@@ -17,6 +17,8 @@ Open this URL in your web browser:
 
 Start play by dragging a white piece. If you want to switch sides, press the Get Move button. If you click the button repeatedly, the computer will play itself.
 
+You can also select different engines: Bare, Bernstein, Plankalkül, and SOMA. The selection can be changed during a game, so e.g. each move can be played by a different engine.
+
 ### Other packages used
 
 * [chess.js](https://github.com/jhlywa/chess.js)

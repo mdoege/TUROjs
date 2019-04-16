@@ -3,6 +3,8 @@
 # A Python chess engine inspired by
 # http://en.chessbase.com/post/reconstructing-turing-s-paper-machine
 
+from pst import pst
+
 import chess as c
 import sys, math, time
 from random import random, expovariate, choice
@@ -14,6 +16,7 @@ PLAYC = c.WHITE
 
 MAXPLIES = 1	# maximum search depth
 QPLIES    = MAXPLIES + 6
+PSTAB     = 0	# influence of piece-square table on moves, 0 = none
 MATETEST  = True	# if True, include mate and draw detection in the material eval
 
 # Easy play / random play parameters
@@ -65,6 +68,11 @@ def getpos(b):
 			if mm == c.KING and (
 			  len(b.pieces(c.PAWN, COMPC)) + len(b.pieces(c.PAWN, PLAYC)) ) <= 8:	# endgame is different
 				mm = 8								#   for the King
+			if COMPC == c.WHITE:
+				j, k = i // 8, i % 8
+				ppv += PSTAB * pst[mm][8 * (7 - j) + k] / 100
+			else:
+				ppv += PSTAB * pst[mm][i]               / 100
 
 		if m and m.piece_type in (c.KING, c.QUEEN, c.ROOK, c.BISHOP, c.KNIGHT) and m.color == COMPC:
 			mv_pt, cp_pt = 0, 0

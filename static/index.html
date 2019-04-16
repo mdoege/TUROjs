@@ -10,7 +10,13 @@
 <script src="chessboard.js"></script>
 <script src="chess.js"></script>
 <script>
+	function settitle() {
+		thetitle.innerHTML = engine.value + " in your browser";
+	}
+
 $(document).ready(function() {
+	settitle();
+
 	function talk(text) {
 		var msg = new SpeechSynthesisUtterance(text);
 		msg.lang = "en-US";
@@ -65,12 +71,15 @@ $(document).ready(function() {
 
 	function getmove() {
 		var fen = chess.fen();
+		var eng = engine.value;
+		console.log(eng);
 		$.ajax({
 			url: "/ptcmove",
 			type: "POST",
 			contentType: "application/json",
 			data: JSON.stringify({
 				fen: fen,
+				engine: eng,
 			}),
 			success: function(data) {
 				recmove(data);
@@ -149,14 +158,27 @@ $(document).ready(function() {
 
 });
 </script>
-<h1>TUROCHAMP in your browser</h1>
+<h1 id="thetitle">PyTUROCHAMP in your browser</h1>
 <div id="fentext">none</div>
 <table><tr>
 <td><div id="board1" style="width: 650px"></div></td>
+<td valign="top">
+<form action="#">
+	<label>Engine selection:
+		<select id="engine" size="5" onchange="settitle()">
+			<option selected>PyTUROCHAMP</option>
+			<option>Bare</option>
+			<option>Bernstein</option>
+			<option>Plankalkül</option>
+			<option>SOMA</option>
+		</select>
+	</label>
+</form>
+</td>
 <td><div id="spgn">none</div></td>
 </tr></table>
 <br>
-<input type="button" id="moveBtn" value="Get TUROCHAMP move now">
+<input type="button" id="moveBtn" value="Get computer move now">
 </body>
 </html>
 
