@@ -22,7 +22,7 @@ $(document).ready(function() {
 		msg.lang = "en-US";
 		window.speechSynthesis.speak(msg);
 	}
-	talk("Hello, welcome to Too Row Champ!");
+	talk("Hello, welcome to " + engine.value + "!");
 	talk("How about a nice game of chess?");
 
 	var setfen = function(source, target, piece, newPos, oldPos, orientation) {
