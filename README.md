@@ -21,6 +21,12 @@ Reload the page to start a new game.
 
 You can also select different engines: Bare, Bernstein, Plankalkül, and SOMA. The selection can be changed during a game, so e.g. each move can be played by a different engine.
 
+### Speech synthesis browser support
+
+The [Web Speech API](https://en.wikipedia.org/wiki/HTML5_audio#Web_Speech_API) is used to announce computer moves. This works best in the desktop versions of Firefox and Safari (i.e., the TUROjs welcome message is read too), whereas in desktop Chrome move announcement works but the welcome message on page load is blocked.
+
+In mobile browsers, there is no speech output when it is not directly triggered by user interaction (e.g. pressing a button) and therefore it gets blocked in TUROjs completely.
+
 ### Other packages used
 
 * [chess.js](https://github.com/jhlywa/chess.js)
