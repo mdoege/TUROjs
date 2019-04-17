@@ -1,7 +1,7 @@
 import chess as c
 import pyturochamp, bare, bernstein, plan, soma
 
-from flask import Flask, request
+from flask import Flask, request, render_template
 app = Flask(__name__, static_url_path = '')
 
 @app.route("/ptcmove", methods = ['POST'])
@@ -24,6 +24,10 @@ def ptcmove():
 		t, r = pyturochamp.getmove(d, silent = True)
 	print(r[0])
 	return r[0]
+
+@app.route("/")
+def main():
+	return render_template("index.html")
 
 app.run(host = '0.0.0.0', port = 5000)
 
