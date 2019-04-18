@@ -12,6 +12,8 @@ def ptcmove():
 	print(fen)
 	print(engine)
 	d = c.Board(fen)
+	if len(list(d.legal_moves)) == 0:
+		return ""
 	if engine == "Bare":
 		t, r = bare.getmove(d, silent = True)
 	elif engine == "Bernstein":

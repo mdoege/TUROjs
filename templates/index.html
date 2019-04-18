@@ -88,6 +88,7 @@ $(document).ready(function() {
 	}
 
 	function recmove(data) {
+		var mymove = "";
 		var moves = chess.moves({ verbose: true });
 		var lastmove = chess.history({ verbose: true });
 		if (lastmove.length > 0) {
@@ -98,13 +99,16 @@ $(document).ready(function() {
 		}
 		for (j = 0; j < moves.length; j++) {
 			if (moves[j].from + moves[j].to == data) {
-				var mymove = moves[j];
+				mymove = moves[j];
 			} else if ((moves[j].from + moves[j].to == data.substring(0, 4)) && moves[j].flags.includes("p")) {
 				console.log(moves[j].promotion, data.substring(4, 5));
 				if (moves[j].promotion == data.substring(4, 5)) {
-					var mymove = moves[j];
+					mymove = moves[j];
 				}
 			}
+		}
+		if (mymove == "") {
+			return;
 		}
 		console.log(mymove.from + "-" + mymove.to);
 		chess.move(mymove);
