@@ -1,5 +1,5 @@
 import chess as c
-import pyturochamp, bare, bernstein, plan, soma
+import pyturochamp, bare, bernstein, plan, shannon, soma
 
 from flask import Flask, request, render_template
 app = Flask(__name__, static_url_path = '')
@@ -20,6 +20,8 @@ def ptcmove():
 		t, r = bernstein.getmove(d, silent = True)
 	elif engine == "Plankalkül":
 		t, r = plan.getmove(d, silent = True)
+	elif engine == "Shannon":
+		t, r = shannon.getmove(d, silent = True)
 	elif engine == "SOMA":
 		t, r = soma.getmove(d, silent = True)
 	else:
