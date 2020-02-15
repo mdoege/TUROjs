@@ -17,9 +17,22 @@
 $(document).ready(function() {
 	settitle();
 
+	var myvoice = "";
+	var voices = speechSynthesis.getVoices();
+	/* for Safari we need to pick an English voice explicitly,
+	   otherwise the system default is used */
+	for (i = 0; i < voices.length; i++) {
+		if (voices[i].lang == "en-US") {
+			myvoice = voices[i];
+			break;
+		}
+	}
 	function talk(text) {
 		var msg = new SpeechSynthesisUtterance(text);
 		msg.lang = "en-US";
+		if (myvoice != "") {
+			msg.voice = myvoice;
+		}
 		window.speechSynthesis.speak(msg);
 	}
 	talk("Hello, welcome to " + engine.value + "!");
@@ -84,6 +97,7 @@ $(document).ready(function() {
 				recmove(data);
 			},
 		});
+		$("#moveBtn").prop('disabled', true);
 		return true;
 	}
 
@@ -93,7 +107,7 @@ $(document).ready(function() {
 		var lastmove = chess.history({ verbose: true });
 		if (lastmove.length > 0) {
 			lastmove = lastmove[lastmove.length - 1];
-			if (lastmove.flags.includes("p")) {
+			if (lastmove.flags.includes("p") || lastmove.flags.includes("e")) {
 				board1.position(chess.fen());
 			}
 		}
@@ -119,13 +133,14 @@ $(document).ready(function() {
 		} else if ((mymove.from == "e1" && mymove.to == "c1") || (mymove.from == "e8" && mymove.to == "c8")) {
 			board1.position(chess.fen());
 		}
-		if (mymove.flags.includes("p")) {
+		if (mymove.flags.includes("p") || mymove.flags.includes("e")) {
 			board1.position(chess.fen());
 		}
 		var fen = chess.fen();
 		fentext.innerHTML = fen;
 		console.log(fen);
 		spgn.innerHTML = chess.pgn();
+		$("#moveBtn").prop('disabled', false);
 
 		var pnames = {
 			"p": "pawn",
@@ -182,7 +197,7 @@ $(document).ready(function() {
 <td><div id="spgn">none</div></td>
 </tr></table>
 <br>
-<input type="button" id="moveBtn" value="Get computer move now">
+<input type="button" id="moveBtn" value="Play computer move for current side">
 </body>
 </html>
 
